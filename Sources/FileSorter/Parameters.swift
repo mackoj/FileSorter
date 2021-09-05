@@ -18,7 +18,7 @@ enum SortOrder: String, EnumerableFlag {
     case .desc:
       return "Descending order >"
     case .random:
-      return "Suffle 🎲"
+      return "Shuffle 🎲"
     }
   }
   

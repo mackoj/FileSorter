@@ -21,11 +21,15 @@ enum SortOrder: String, EnumerableFlag {
 enum SortBy: String, EnumerableFlag {
   case creationDate
   case modificationDate
-  
+  case nameRelative
+  case nameAbsolute
+  case natural
+
   var fileAttributeKey: FileAttributeKey {
     switch self {
     case .creationDate: return .creationDate
     case .modificationDate: return .modificationDate
+    default: fatalError("This should not happen.")
     }
   }
   
@@ -35,6 +39,12 @@ enum SortBy: String, EnumerableFlag {
       return "File system creation date."
     case .modificationDate:
       return "File system modification date."
+    case .nameRelative:
+      return "Name relative to parent folder."
+    case .nameAbsolute:
+      return "Name relative to every other files."
+    case .natural:
+      return "Natural sort"
     }
   }
 }

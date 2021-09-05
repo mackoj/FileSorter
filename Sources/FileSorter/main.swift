@@ -5,25 +5,25 @@ import Logging
 struct Sorter: ParsableCommand {
   @Argument(help: "File that contain a list of file to order.")
   var inputFilePath: String
-
+  
   @Option(name: .shortAndLong, help: "Output path where to wrote the sorted content.")
   var outputPath: String?
-
+  
   @Option(name: .shortAndLong, help: "Write the sorted output into the inputFile.")
   var inPlace: Bool = true
-
+  
   @Flag
   var outputSortOrder: SortOrder = .desc
-    
+  
   @Flag
   var outputSortBy: SortBy = .creationDate
-
+  
   @Flag(help: "Toggle the filtering of symlinks.")
   var ignoreSymlink: Bool = false
   
   @Flag
   var verbose: Verbosity = .minimal
-
+  
   var logger: CLILog? = nil
   
   mutating func run() {
@@ -56,7 +56,7 @@ struct Sorter: ParsableCommand {
   ) throws -> String {
     let data = try String(contentsOfFile: inputFilePath, encoding: .utf8)
     let lines = data.components(separatedBy: .newlines)
-
+    
     let elements = try lines.reduce(into: [FileInfo](), { res, fileName in
       if let date = try getFileAttribute(fileName, fileManager) {
         res.append(FileInfo(fileName: fileName, when: date))
@@ -77,7 +77,7 @@ struct Sorter: ParsableCommand {
         .sorted(by: \.when, order: >)
         .map(\.description)
         .joined(separator: "\n")
-
+      
     case .random:
       return elements
         .lazy

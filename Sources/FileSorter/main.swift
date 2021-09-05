@@ -102,7 +102,7 @@ struct Sorter: ParsableCommand {
   ) throws -> Date? {
     if fileManager.fileExists(atPath: filePath) {
       let attributes = try fileManager.attributesOfItem(atPath: filePath)
-      if ignoreSymlink == false {
+      if ignoreSymlink == true {
         guard let type = attributes[FileAttributeKey.type] as? FileAttributeType else {
           throw("Failed to extract info for fileAttributeKey type")
         }

@@ -16,6 +16,17 @@ enum SortOrder: String, EnumerableFlag {
       return "Suffle 🎲"
     }
   }
+  
+  static func name(for value: SortOrder) -> NameSpecification {
+    switch value {
+    case .asc:
+      return .customLong("order-asc")
+    case .desc:
+      return .customLong("order-desc")
+    case .random:
+      return .customLong("order-random")
+    }
+  }
 }
 
 enum SortBy: String, EnumerableFlag {
@@ -37,12 +48,21 @@ enum SortBy: String, EnumerableFlag {
       return "File system modification date."
     }
   }
+  
+  static func name(for value: SortBy) -> NameSpecification {
+    switch value {
+    case .creationDate:
+      return .customLong("by-creationDate")
+    case .modificationDate:
+      return .customLong("by-modificationDate")
+    }
+  }
 }
 
 enum Verbosity: String, EnumerableFlag, Codable {
   case none
   case minimal
-  case everything
+  case all
   
   static func help(for value: Verbosity) -> ArgumentHelp? {
     switch value {
@@ -50,8 +70,19 @@ enum Verbosity: String, EnumerableFlag, Codable {
       return ArgumentHelp("Nothing to display.")
     case .minimal:
       return ArgumentHelp("Display log of levels notice, warning, error and critical.")
-    case .everything:
-      return ArgumentHelp("Display logs.")
+    case .all:
+      return ArgumentHelp("Display all logs.")
+    }
+  }
+  
+  static func name(for value: Verbosity) -> NameSpecification {
+    switch value {
+    case .none:
+      return .customLong("verbose-none")
+    case .minimal:
+      return .customLong("verbose-minimal")
+    case .all:
+      return .customLong("verbose-all")
     }
   }
 }

@@ -21,7 +21,7 @@ __<input-file-path>__ should contain path to regular files.
 It will look line after line in the __<input-file-path>__ in order to find the related file and get its informations **creation date** or **modification date** in order to sort them.
 
 ```
-USAGE: sorter <input-file-path> [--output-path <output-path>] [--in-place <in-place>] [--order-asc] [--order-desc] [--order-random] [--by-creationDate] [--by-modificationDate] [--ignore-symlink] [--verbose-none] [--verbose-minimal] [--verbose-all]
+USAGE: sorter <input-file-path> [--output-path <output-path>] [--order-asc] [--order-desc] [--order-random] [--by-creationDate] [--by-modificationDate] [--ignore-symlink] [--verbose-none] [--verbose-minimal] [--verbose-all]
 
 ARGUMENTS:
   <input-file-path>       File that contain a list of file to order.
@@ -29,8 +29,6 @@ ARGUMENTS:
 OPTIONS:
   -o, --output-path <output-path>
                           Output path where to wrote the sorted content.
-  -i, --in-place <in-place>
-                          Write the sorted output into the inputFile. (default: true)
   --order-asc             Ascending order < (default: desc)
   --order-desc            Descending order > (default: desc)
   --order-random          Suffle 🎲 (default: desc)

@@ -1,6 +1,8 @@
 import Foundation
 
-extension String : Error {}
+extension String : Error, LocalizedError {
+  public var errorDescription: String? { self }
+}
 
 extension Sequence {
   func sorted<T: Comparable>(by keyPath: KeyPath<Element, T>, order: @escaping (T, T) -> Bool) -> [Element] {

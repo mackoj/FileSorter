@@ -1,6 +1,11 @@
 import Foundation
 import ArgumentParser
 
+enum FakeBool: String, EnumerableFlag, ExpressibleByArgument {
+  case yes
+  case no
+}
+
 enum SortOrder: String, EnumerableFlag {
   case asc
   case desc

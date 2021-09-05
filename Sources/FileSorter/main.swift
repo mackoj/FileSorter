@@ -9,8 +9,7 @@ struct Sorter: ParsableCommand {
   @Option(name: .shortAndLong, help: "Output path where to wrote the sorted content.")
   var outputPath: String?
   
-  @Option(name: .shortAndLong, help: "Write the sorted output into the inputFile.")
-  var inPlace: Bool = true
+  var inPlace: Bool { get { outputPath == nil ? true : false } }
   
   @Flag
   var outputSortOrder: SortOrder = .desc
@@ -35,18 +34,27 @@ struct Sorter: ParsableCommand {
     }
   }
   
-  func processInput() throws {
+  mutating func processInput() throws {
     let fileManager = FileManager.default
     guard fileManager.fileExists(atPath: inputFilePath) else {
       throw("File do not exist at path(\(inputFilePath)")
     }
+
     let output = try runOnFiles(inputFilePath, fileManager)
-    if inPlace {
+    try saveOutput(output)
+  }
+  
+  func saveOutput(
+    _ output: String,
+    _ fileManager : FileManager = .default
+    ) throws {
+    if inPlace == true {
       try output.write(toFile: inputFilePath, atomically: true, encoding: .utf8)
-    } else if let out = outputPath, fileManager.fileExists(atPath: out) {
-      try output.write(toFile: out, atomically: true, encoding: .utf8)
-    } else {
-      throw("Failed to write the file")
+    } else if let outputPath = outputPath {
+      if fileManager.fileExists(atPath: outputPath) {
+        try fileManager.removeItem(atPath: outputPath)
+      }
+      try output.write(toFile: outputPath, atomically: true, encoding: .utf8)
     }
   }
   
@@ -94,7 +102,7 @@ struct Sorter: ParsableCommand {
   ) throws -> Date? {
     if fileManager.fileExists(atPath: filePath) {
       let attributes = try fileManager.attributesOfItem(atPath: filePath)
-      if ignoreSymlink {
+      if ignoreSymlink == false {
         guard let type = attributes[FileAttributeKey.type] as? FileAttributeType else {
           throw("Failed to extract info for fileAttributeKey type")
         }

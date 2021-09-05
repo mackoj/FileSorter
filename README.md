@@ -1,4 +1,4 @@
-# DateSorter
+# FileSorter
 
 This package contain a executable sorter.
 

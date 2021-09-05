@@ -106,7 +106,10 @@ struct Sorter: ParsableCommand {
         guard let type = attributes[FileAttributeKey.type] as? FileAttributeType else {
           throw("Failed to extract info for fileAttributeKey type")
         }
-        if type == .typeSymbolicLink { return nil }
+        if type == .typeSymbolicLink {
+          logger?.log(level: .notice, message: "This file \(filePath) is a symlink it is excluded.")
+          return nil
+        }
       }
       guard let date = attributes[outputSortBy.fileAttributeKey] as? Date else {
         throw("Failed to extract info for fileAttributeKey \(outputSortBy.fileAttributeKey)")

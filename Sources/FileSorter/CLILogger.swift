@@ -14,7 +14,7 @@ struct CLILog: Codable {
     switch verbosity {
     case .none: break
     case .minimal: if level >= .notice { print(message) }
-    case .all: if level > .trace { print(message) }
+    case .all: if level >= .trace { print(message) }
     }
   }
 }
